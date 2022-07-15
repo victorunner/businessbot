@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bot
+*.session
+*.session-journal
+
+# VS Code
+.vscode/
+
