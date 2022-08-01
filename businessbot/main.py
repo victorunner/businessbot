@@ -1,5 +1,6 @@
 import glob
 import os
+import pathlib
 import shutil
 import tempfile
 import zipfile
@@ -7,7 +8,9 @@ from pathlib import Path
 
 import pypandoc
 from dotenv import load_dotenv
+from emoji import emojize
 from pyrogram import Client, filters
+from pyrogram.types import BotCommand
 
 load_dotenv()
 
@@ -48,6 +51,24 @@ def convert_files_to_md(
             shutil.copy(src, dest)
 
     return counverted_files_count
+
+
+@app.on_message(filters.command('quiz'))
+async def quiz(_, message):
+    quiz_text = pathlib.Path(
+        '/home/victor/Dev/businessbot/businessbot/quiz.md'
+    ).read_text(encoding='utf-8')
+
+    for question in quiz_text.split('&&'):
+        await message.reply(emojize(question.strip()))
+
+
+@app.on_message(filters.command('task'))
+async def task(_, message):
+    await message.reply_document('/home/victor/Dev/businessbot/businessbot/task.md')
+    await message.reply_document(
+        '/home/victor/Dev/businessbot/businessbot/spent_times.json'
+    )
 
 
 @app.on_message(filters.document)
@@ -100,5 +121,10 @@ async def on_document(client, message):
         else:
             await message.reply('Нет файлов для конвертации в md-формат.')
 
+
+# with app:
+#    app.set_bot_commands(
+#        [BotCommand('quiz', 'Interview quiz 10'), BotCommand('task', 'Interview task')]
+#    )
 
 app.run()
