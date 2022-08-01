@@ -9,8 +9,8 @@ python = "^3.10"
 python-dotenv = "^0.20.0"
 Pyrogram = "^2.0.30"
 TgCrypto = "^1.2.3"
-python-telegram-bot = "^13.12"
 pypandoc = "^1.8.1"
+emoji = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
